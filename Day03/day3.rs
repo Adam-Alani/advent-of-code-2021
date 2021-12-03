@@ -57,32 +57,16 @@ fn get_stats(co2:bool, lines: &Vec<Vec<char>>) -> Vec<char> {
         let mut new_zeros = Vec::new();
         let mut new_ones = Vec::new();
 
-        if co2 {
-            if zeros.len() > ones.len() {
-                for i in 0..zeros.len() {
-                    if lines[zeros[i]][j] == '0' { new_zeros.push(zeros[i]) }
-                    else { new_ones.push(zeros[i]) }
-                }
-            }
-            else {
-                for i in 0..ones.len() {
-                    if lines[ones[i]][j] == '0' { new_zeros.push(ones[i]) }
-                    else { new_ones.push(ones[i]) }
-                }
-            }
+        if (co2 && zeros.len() > ones.len()) || (!co2 && zeros.len() <= ones.len())  {
+            zeros.iter().for_each(|&i| {
+                if lines[i][j] == '0' { new_zeros.push(i) }
+                else { new_ones.push(i) }
+            });
         } else {
-            if zeros.len() <= ones.len() {
-                for i in 0..zeros.len() {
-                    if lines[zeros[i]][j] == '0' { new_zeros.push(zeros[i]) }
-                    else { new_ones.push(zeros[i]) }
-                }
-            }
-            else {
-                for i in 0..ones.len() {
-                    if lines[ones[i]][j] == '0' { new_zeros.push(ones[i]) }
-                    else { new_ones.push(ones[i]) }
-                }
-            }
+            ones.iter().for_each(|&i| {
+                if lines[i][j] == '0' { new_zeros.push(i) }
+                else { new_ones.push(i) }
+            });
         }
 
         zeros = new_zeros;
@@ -90,8 +74,7 @@ fn get_stats(co2:bool, lines: &Vec<Vec<char>>) -> Vec<char> {
         
         if co2 && zeros.len() == 1 && ones.len() == 1 {
             return lines[ones[0]].clone();
-        }
-        if zeros.len() == 1 && ones.len() == 1 {
+        } else if zeros.len() == 1 && ones.len() == 1 {
             return lines[zeros[0]].clone();
         }
     }

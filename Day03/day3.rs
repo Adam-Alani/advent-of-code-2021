@@ -13,7 +13,7 @@ fn puzzle1() {
     let lines: Vec<Vec<char>> = reader.lines().map(|line| line.unwrap().chars().collect()).collect();
   
     let mut gamma = 0b0000;
-    let mut epsilon = 0b000;
+    // let mut epsilon = 0b000;
 
     for j in 0..lines[0].len() {
         
@@ -21,22 +21,14 @@ fn puzzle1() {
         let mut ones = 0;
 
         for i in 0..lines.len() {
-            if lines[i][j] == '0' {
-                zeros += 1;
-            }
-            else {
-                ones += 1;
-            }
+            if lines[i][j] == '0' { zeros += 1 }
+            else { ones += 1 }
         }
-        if zeros > ones {
-            gamma = (gamma << 1) | 1;
-            epsilon = (epsilon << 1) | 0;
-        }
-        else {
-            gamma = (gamma << 1) | 0;
-            epsilon = (epsilon << 1) | 1;
-        }
-      }
+        if zeros > ones { gamma = (gamma << 1) | 1 }
+        else { gamma = (gamma << 1) | 0 }
+    }
+    
+    let epsilon = 2u32.pow(12) - 1 - gamma;
     println!("{}", gamma * epsilon);
 
 }

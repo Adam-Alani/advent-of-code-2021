@@ -13,7 +13,6 @@ fn puzzle1() {
     let lines: Vec<Vec<char>> = reader.lines().map(|line| line.unwrap().chars().collect()).collect();
   
     let mut gamma = 0b0000;
-    // let mut epsilon = 0b000;
 
     for j in 0..lines[0].len() {
         
@@ -86,5 +85,3 @@ fn puzzle2() {
     println!("{}", c*o);
 
 }
-
-    

@@ -1,6 +1,4 @@
-use std::fs::File;
-use std::io::BufReader;
-use std::io::BufRead;
+use std::fs;
 
 fn main() {
     println!("{}", simulate(80));
@@ -17,13 +15,9 @@ fn simulate(days: i16) -> u128 {
 }
 
 fn parse_input() -> [u128; 9]  {
-    let file = File::open("./input.txt").expect("file not found");
-    let reader = BufReader::new(file);
     let mut fish = [0;9];
-    reader.lines().for_each(|line| {
-        line.unwrap().split(',').map(|s| s.parse().unwrap()).collect::<Vec<i32>>().iter().for_each(|i| {
-            fish[*i as usize] += 1;
-        });
+    fs::read_to_string("./input.txt").unwrap().split(",").for_each(|x| {
+        fish[x.parse::<usize>().unwrap()] += 1
     });
     return fish;
 }

@@ -1,7 +1,6 @@
 use std::fs::File;
-use std::io::BufReader;
 use std::io::BufRead;
-use itertools::Itertools;
+use std::io::BufReader;
 
 fn main() {
     puzzle1();
@@ -27,24 +26,31 @@ struct Signal {
 
 impl Signal {
     fn parse(input: &str) -> Option<Signal> {
-        let (pattern , output) = input.split_once('|')?;
-        let pattern = pattern.split_whitespace().into_iter().map(str::to_owned).collect();
-        let output = output.split_whitespace().into_iter().map(str::to_owned).collect();
-        Some(Signal {
-            output,
-            pattern,
-        })
+        let (pattern, output) = input.split_once('|')?;
+        let pattern = pattern
+            .split_whitespace()
+            .into_iter()
+            .map(str::to_owned)
+            .collect();
+        let output = output
+            .split_whitespace()
+            .into_iter()
+            .map(str::to_owned)
+            .collect();
+        Some(Signal { output, pattern })
     }
 }
 
 fn parse_input() -> Vec<Signal> {
     let file = File::open("./input.txt").expect("file not found");
     let reader = BufReader::new(file);
-    let mut lines:Vec<Signal> = Vec::new();
+    let mut lines: Vec<Signal> = Vec::new();
     reader.lines().for_each(|line| {
         let line = line.unwrap();
         let line = Signal::parse(&line);
-        if let Some(line) = line { lines.push(line) }
+        if let Some(line) = line {
+            lines.push(line)
+        }
     });
     return lines;
 }
